@@ -16,7 +16,18 @@ protocol ResultViewControllerProtocol {
 class ResultViewController: UIViewController {
 
     
-    var delagete:ResultViewControllerProtocol?
+    @IBOutlet weak var dimView: UIView!
+    
+    @IBOutlet weak var dialogView: UIView!
+    
+    @IBOutlet weak var resultLabel: UILabel!
+    
+    @IBOutlet weak var feedbackLabel: UILabel!
+    
+    @IBOutlet weak var dismissButton: UIButton!
+    
+    
+    var delegate:ResultViewControllerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,29 +38,21 @@ class ResultViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         // Set rounded corners for the dialog view
-        dialogView.layer.cornerRadious = 10
+        dialogView.layer.cornerRadius = 10
         
     }
     
     func setPopup(withTitle:String, withMessage:String, withAction:String) {
         
         resultLabel.text = withTitle
-        feedbackLabel.text = withMEssage
+        feedbackLabel.text = withMessage
         dismissButton.setTitle(withAction, for: .normal)
     
     }
-    
-    override func didReaceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any recources that can be recreated.
-    }
-    
-    ---->  func dismissTapped(_ sender: UIButton) {
-        
-        
-        
-        
-        dimiss(animated: true, campletion: {
+
+        @IBAction func dismissTapped(_ sender: UIButton) {
+            
+        dismiss(animated: true, completion: {
             
             // Clear the labels
             self.resultLabel.text = ""
@@ -57,7 +60,7 @@ class ResultViewController: UIViewController {
             
         })
         
-        delagate?.resultViewDismissed()
+        delegate?.resultViewDismissed()
         
     }
  
@@ -73,4 +76,4 @@ class ResultViewController: UIViewController {
     }
     */
 
-}
+

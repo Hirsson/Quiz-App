@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UITableViewDelegate, ResultViewControllerProtocol {
 
     @IBOutlet weak var questionLabel: UILabel!
     
@@ -26,10 +26,9 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
         // Do any additional setup after loading the view, typically from a nib.
         
         // Set up result dialog view controller
-        resultVC = storyboard?.instantiateViewController(withIdentifier: "ResultVC") as?
-            ResultViewContoller
+        resultVC = storyboard?.instantiateViewController(withIdentifier: "ResultVC") as? ResultViewController
         resultVC?.delegate = self
-        resultVC?.modalPresentationStyle = .overCurrentContex
+        resultVC?.modalPresentationStyle = .overCurrentContext
         
         // Conform to the table view protocols
         tableView.dataSource = self
@@ -112,14 +111,14 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         // Check against question index being out of bounds
-        guard questionIndex < question.count else {
+        guard questionIndex < questions.count else {
             return
         }
         
         // Declare variable for the popup
         var title:String = ""
         let message:String = questions[questionIndex].feedback!
-        let actions:String = "Next"
+        let action:String = "Next"
         
         
         // User has selected an answer
@@ -146,10 +145,9 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
         if resultVC != nil {
             
             // Let the main thread display the popup
-            // Fixes the issue Studnets encounter here:
-                https://academy.codewithchris.com/courses/258388/lectures/4261621
+           //     https://academy.codewithchris.com/courses/258388/lectures/4261621
             DispatchQueue.main.async {
-                self.present(self.resultVC!. animiated: true, completion: {
+                self.present(self.resultVC!, animated: true, completion: {
                     // Set the mesage for thr popup:
                     self.resultVC!.setPopup(withTitle: title, withMessage: message, withAction: action)
                     
@@ -164,7 +162,7 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
         
     }
     
-    // MARK: - ResutViewControllerProtocol methods
+    // MARK: - ResultViewControllerProtocol methods
     
     func resultViewDismissed() {
         
@@ -177,7 +175,7 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
             if resultVC != nil {
                 present(resultVC!, animated: true, completion: {
                     
-                    self.resultVC?.setPopup(withTitle: "Summary", withMessage: "You got\(self.numCorrect) out of \(Self.questions.count) correct.",withAction: "Restart")
+                    self.resultVC?.setPopup(withTitle: "Summary", withMessage: "You got\(self.numCorrect) out of \(self.questions.count) correct.",withAction: "Restart")
                     
                 })
                 
