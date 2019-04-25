@@ -16,6 +16,7 @@
 		1055391B2265F8C200344630 /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1055391A2265F8C200344630 /* QuizModel.swift */; };
 		1055391D22661D2000344630 /* QuestionData.json in Resources */ = {isa = PBXBuildFile; fileRef = 1055391C22661D2000344630 /* QuestionData.json */; };
 		267E2697226E04E600042562 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267E2696226E04E600042562 /* ResultViewController.swift */; };
+		26F1BA9E2271A97A00F6081C /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F1BA9D2271A97A00F6081C /* StateManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		1055391A2265F8C200344630 /* QuizModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
 		1055391C22661D2000344630 /* QuestionData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QuestionData.json; sourceTree = "<group>"; };
 		267E2696226E04E600042562 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		26F1BA9D2271A97A00F6081C /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				105539062265EF5000344630 /* AppDelegate.swift */,
+				26F1BA9D2271A97A00F6081C /* StateManager.swift */,
 				105539082265EF5000344630 /* ViewController.swift */,
 				267E2696226E04E600042562 /* ResultViewController.swift */,
 				105539182265F71900344630 /* Question.swift */,
@@ -151,6 +154,7 @@
 				267E2697226E04E600042562 /* ResultViewController.swift in Sources */,
 				1055391B2265F8C200344630 /* QuizModel.swift in Sources */,
 				105539192265F71900344630 /* Question.swift in Sources */,
+				26F1BA9E2271A97A00F6081C /* StateManager.swift in Sources */,
 				105539092265EF5000344630 /* ViewController.swift in Sources */,
 				105539072265EF5000344630 /* AppDelegate.swift in Sources */,
 			);

@@ -73,7 +73,21 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
         
         // Set our questions property with the questions from quiz model
         self.questions = questions
-    
+        
+        // Check if there's a stored state
+        let qIndex = StateManager.retrieveValue(key: StateManager.questionIndexKey) as? Int
+        
+        // Check if it's nil. If not, check if it's a valid index
+        if qIndex != nil && qIndex! < questions.count {
+            
+            // Set the current index to the reastored index
+            questionIndex = qIndex!
+            
+            // Restore the num correct
+            numCorrect = StateManager.retrieveValue(key: StateManager.numCorrectKey) as! Int
+            
+        }
+        
         // Tell tableview to reload the data
         // tableView.reloadData()
         
@@ -160,6 +174,9 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
         questionIndex += 1
         // displayQuestion()
         
+        // Save state
+        StateManager.saveState(numCorrect: numCorrect, questionIndex: questionIndex)
+        
     }
     
     // MARK: - ResultViewControllerProtocol methods
@@ -180,8 +197,11 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
                 })
                 
             }
-            
+            // Increment the question index so that the next time the user dismisses the dialog, we go into the next branch of this IF statment
             questionIndex += 1
+            
+            // Clear state
+            StateManager.clearState()
             
         }
        

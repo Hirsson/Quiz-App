@@ -64,6 +64,55 @@ class QuizModel {
     
     func getRemoteJsonFile() {
         
+        // Get a URL object from a string
+        let stringUrl = "https://codewithchris.com/code/QuestionData.json"
+        let url = URL(string: stringUrl)
+        
+        guard url != nil else {
+            print("couldn't get a URL object")
+            return
+        }
+        
+        // Get a URLSession object
+        let session = URLSession.shared
+        
+        //Get a DataTask object
+        let dataTask = session.dataTask(with: url!) { (data, response, error) in
+            
+            if error == nil && data != nil {
+                
+                // Create a json decoder
+                let decoder = JSONDecoder()
+                
+                do {
+                    
+                    // Try to parse the data
+                    let array = try decoder.decode([Question].self, from: data!)
+                    
+                    // Notify the victim controller with results by passing the date back to the main thread
+                    DispatchQueue.main.async {
+                        
+                        self.delegate?.questionsRetrieved(questions: array)
+                        
+                    }
+                    
+                }
+                catch {
+                    print("Couldn't parse the json")
+                    
+                }
+                
+            }
+            
+            
+        }
+                
+            
+    
+         // Call resume on the DataTask object
+            dataTask.resume()
+            
+                
     }
     
 }
