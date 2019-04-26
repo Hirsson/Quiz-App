@@ -10,6 +10,12 @@ import UIKit
 
 class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UITableViewDelegate, ResultViewControllerProtocol {
 
+    @IBOutlet weak var stackViewLeadingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var stackViewTrailingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var rootStackView: UIStackView!
+    
     @IBOutlet weak var questionLabel: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
@@ -65,7 +71,51 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
         // Display the answer
         tableView.reloadData()
         
+        // Animate in the question
+        slideInQuestion()
+        
     }
+    
+    func slideInQuestion() {
+        
+        // Set the starting state
+        rootStackView.alpha = 0
+        stackViewLeadingConstraint.constant = 1000
+        stackViewTrailingConstraint.constant = -1000
+        view.layoutIfNeeded()
+        
+        // Animate to the ending state
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            
+            self.rootStackView.alpha = 1
+            self.stackViewLeadingConstraint.constant = 0
+            self.stackViewTrailingConstraint.constant = 0
+            self.view.layoutIfNeeded()
+            
+        }, completion: nil)
+        
+    }
+    
+    func slideOutQuestion() {
+        
+        // Set the starting state
+        rootStackView.alpha = 1
+        stackViewLeadingConstraint.constant = 0
+        stackViewTrailingConstraint.constant = 0
+        view.layoutIfNeeded()
+        
+        // Animate to the ending state
+        UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseIn, animations: {
+            
+            self.rootStackView.alpha = 0
+            self.stackViewLeadingConstraint.constant = -1000
+            self.stackViewTrailingConstraint.constant = 1000
+            self.view.layoutIfNeeded()
+            
+        }, completion: nil)
+        
+    }
+    
     
     // MARK: - QuizProtocol methods
     
@@ -154,12 +204,14 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
             
         }
      
+        // Slide out question
+        slideOutQuestion()
+        
         // Display the popup
         
         if resultVC != nil {
             
             // Let the main thread display the popup
-           //     https://academy.codewithchris.com/courses/258388/lectures/4261621
             DispatchQueue.main.async {
                 self.present(self.resultVC!, animated: true, completion: {
                     // Set the mesage for thr popup:
@@ -192,7 +244,7 @@ class ViewController: UIViewController, QuizProtocol, UITableViewDataSource, UIT
             if resultVC != nil {
                 present(resultVC!, animated: true, completion: {
                     
-                    self.resultVC?.setPopup(withTitle: "Summary", withMessage: "You got\(self.numCorrect) out of \(self.questions.count) correct.",withAction: "Restart")
+                    self.resultVC?.setPopup(withTitle: "Summary", withMessage: "You got \(self.numCorrect) out of \(self.questions.count) correct.",withAction: "Restart")
                     
                 })
                 
